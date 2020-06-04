@@ -1,0 +1,15 @@
+#floors: 4
+Floor#1, #Rooms: 3
+Standard, 101, 2, 25
+Standard, 102, 3, 25
+Conference, 103, 30, 5
+Floor#2, #Rooms: 2
+Standard, 201, 1, 25
+Sweet, 202, 300
+Floor#3, #Rooms: 4
+Standard, 301, 3, 25
+Sweet, 302, 400
+Standard, 303, 2, 25
+Standard, 304, 1, 50
+Floor#4, #Rooms: 1
+Sweet, 401, 100

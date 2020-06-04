@@ -1,0 +1,1 @@
+this system takes input from a txt file called hotel
