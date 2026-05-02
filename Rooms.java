@@ -1,41 +1,90 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package hotel;
+package com.example.hotel.room;
 
 /**
- *
- * @author tawadros
+ * Represents an abstract hotel room with basic reservation functionality.
+ * Subclasses are responsible for implementing the specific pricing logic.
  */
-public abstract class  Rooms {
-  int roomnumber;
-int daysofreservation;
-boolean isreserved;
+public abstract class Room {
 
-    public Rooms() {
-        isreserved=false;
-        daysofreservation=0;
+    private static final String MSG_ROOM_RESERVED = "The room is now reserved.";
+
+    private final int roomNumber;
+    private int daysOfReservation;
+    private boolean reserved;
+
+    /**
+     * Constructs a new Room with a specified room number.
+     * The room is initially not reserved.
+     *
+     * @param roomNumber The unique number identifying this room.
+     */
+    public Room(int roomNumber) {
+        this.roomNumber = roomNumber;
+        this.reserved = false;
+        this.daysOfReservation = 0;
     }
 
-    public Rooms(int roomnumber) {
-        this.roomnumber = roomnumber;
+    /**
+     * Reserves the room for a specified number of days.
+     * If the room is already reserved or the number of days is not positive,
+     * the reservation will not be made.
+     *
+     * @param numberOfDays The number of days to reserve the room for.
+     */
+    public void reserve(int numberOfDays) {
+        if (this.reserved) {
+            System.err.println("Error: Room " + this.roomNumber + " is already reserved.");
+            return;
+        }
+        if (numberOfDays > 0) {
+            this.reserved = true;
+            this.daysOfReservation = numberOfDays;
+            System.out.println(MSG_ROOM_RESERVED);
+        } else {
+            System.err.println("Error: Number of reservation days must be positive.");
+        }
     }
-     public void reserve(int c){
-    isreserved=true;
-        System.out.println("now the room is reserved");
-        daysofreservation=c;
+    
+    /**
+     * Cancels the current reservation for the room, resetting its state.
+     */
+    public void cancelReservation() {
+        this.reserved = false;
+        this.daysOfReservation = 0;
     }
-     
-    public boolean check(){
-    if(isreserved==true)
-            return true;
-    else
-          return false;
-    }
-     public abstract double  totalpriceofreservation ();
-      
-     
 
+    /**
+     * Checks if the room is currently reserved.
+     *
+     * @return true if the room is reserved, false otherwise.
+     */
+    public boolean isReserved() {
+        return this.reserved;
+    }
+
+    /**
+     * Returns the room number.
+     *
+     * @return The integer room number.
+     */
+    public int getRoomNumber() {
+        return this.roomNumber;
+    }
+
+    /**
+     * Returns the number of days for which the room is reserved.
+     *
+     * @return The number of reservation days, or 0 if not reserved.
+     */
+    public int getDaysOfReservation() {
+        return this.daysOfReservation;
+    }
+
+    /**
+     * Calculates the total price for the current reservation.
+     * This abstract method must be implemented by concrete subclasses.
+     *
+     * @return The total reservation price as a double.
+     */
+    public abstract double getTotalPriceOfReservation();
 }
