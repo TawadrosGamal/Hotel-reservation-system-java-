@@ -1,53 +1,75 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hotel;
 
 /**
- *
- * @author tawadros
+ * Represents a conference room in a hotel, inheriting basic room properties.
+ * This class calculates reservation costs based on the number of seats and price per seat.
  */
-public class ConferanceRoom extends Rooms{
-    int numberofseats;
-    double seatprice;
+public class ConferenceRoom extends Rooms {
 
-    public ConferanceRoom(  int roomnumber,int numberofseats,double seatprice){
-        super(roomnumber);
-        this.numberofseats = numberofseats;
-        this.seatprice = seatprice;
+    private final int numberOfSeats;
+    private final double seatPrice;
+
+    /**
+     * Constructs a ConferenceRoom with a specific room number, number of seats, and price per seat.
+     *
+     * @param roomNumber The unique number identifying the room.
+     * @param numberOfSeats The total number of seats available in the conference room. Must be positive.
+     * @param seatPrice The price per seat for a reservation. Must be non-negative.
+     * @throws IllegalArgumentException if numberOfSeats is not positive or seatPrice is negative.
+     */
+    public ConferenceRoom(int roomNumber, int numberOfSeats, double seatPrice) {
+        super(roomNumber);
+        if (numberOfSeats <= 0) {
+            throw new IllegalArgumentException("Number of seats must be positive.");
+        }
+        if (seatPrice < 0.0) {
+            throw new IllegalArgumentException("Seat price cannot be negative.");
+        }
+        this.numberOfSeats = numberOfSeats;
+        this.seatPrice = seatPrice;
     }
-  
+
+    /**
+     * Calculates the total price of the reservation for the conference room.
+     * The price is determined by the number of seats, the price per seat, and the number of reservation days.
+     *
+     * @return The total reservation price.
+     */
     @Override
-      public double totalpriceofreservation(){
-      return numberofseats*seatprice*daysofreservation;
-      }
-     
-      public String tostring(){
-      if(isreserved==true)
-          return "the room number is "+roomnumber+"the days of reservation are "+daysofreservation+" the number of seats is "+numberofseats
-                  +"the price per seat is "+seatprice+" the room is reserved";
-     else
-           return "the room number is "+roomnumber+"the days of reservation are "+daysofreservation+" the number of seats is "+numberofseats
-                  +"the price per seat is "+seatprice+" the room is not reserved";
-      
-      }
-              
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
-    
-    
-    
-    
-    
-    
+    public double totalpriceofreservation() {
+        return numberOfSeats * seatPrice * daysofreservation;
+    }
+
+    /**
+     * Returns a string representation of the ConferenceRoom, including its details and reservation status.
+     *
+     * @return A formatted string describing the room.
+     */
+    @Override
+    public String toString() {
+        String baseInfo = String.format("the room number is %d, the number of seats is %d, the price per seat is %.2f",
+                                        roomnumber, numberOfSeats, seatPrice);
+
+        if (isreserved) {
+            return String.format("%s, the days of reservation are %d, the room is reserved", baseInfo, daysofreservation);
+        } else {
+            return String.format("%s, the room is not reserved", baseInfo);
+        }
+    }
+
+    /**
+     * Gets the number of seats in the conference room.
+     * @return the number of seats.
+     */
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    /**
+     * Gets the price per seat for reservation.
+     * @return the price per seat.
+     */
+    public double getSeatPrice() {
+        return seatPrice;
+    }
 }
